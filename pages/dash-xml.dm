@@ -1,0 +1,166 @@
+@page - title Dash --- XML ---- -
+    main -
+        h1 -- Dash XML --
+        p - class center -- “ IT’S JUST TOO SIMPLE — LET’S TURN IT COMPLEX ” --
+        p -- This is one example about how Dash Markup can be used in practice. --
+        p -- Short proof of concept: --
+
+!-- pre will keep indentation, which we don't want --
+pre -
+img - src res/dash-markup.svg - alt Poster:Dash --- Markup ---- -- 
+br -- 
+a - href //unseen-site.fun - target _blank - 
+    i -- Unseen-Site.Fun -- 
+- 
+-
+!-- implementations may escape these special characters --
+pre -
+<img src="res/dash-markup.svg" alt="Poster:Dash - Markup --" />
+<br />
+<a href="//unseen-site.fun" target="_blank">
+    <i>Unseen-Site.Fun</i>
+</a>
+-
+        p -- With Dash Markup, your eyes & fingers will (hopefully) strain less on the syntax 😄 --
+        h2 -- Basic Rules --
+        ul -
+            li -
+                p -- The word before the first single dash is treated as an XML tag. --
+            -
+            li -
+                p -- For words between single dashes, --
+                ul -
+                    li -- the first word is attribute name, --
+                    li -- and the rest are together as attribute value. --
+                -
+                p -- If plain dashes are desired between these words, type 2 more dashes in place. --
+            -
+            li -
+                p -- For a Dash Markup line that ends with a single dash, --
+                ul -
+                    li -- if there is a tag, this line will become an open tag; --
+                    li -- if this is a bare single dash, this line will close the previous tag. --
+                -
+            -
+            li -
+                p -- For a Dash Markup line that ends with a double dash, --
+                ul -
+                    li -- if there is another double dash in line, words and dashes after that will become content of the current XML tag, and the tag is closed afterwards; --
+                    li -- otherwise, the tag will close itself as a void element. --
+                -
+            -
+            li -
+                p -- Special cases for tags: --
+                ul -
+                    li -
+                        p -
+                            If the “tag” is
+                            code -- !-- --
+                            , this line will become XML comment (
+                            code -- <!-- --> --
+                            )
+                        -
+                    -
+                    li -
+                        p -
+                            If this “tag” starts with
+                            code -- ! --
+                            , its closing will omit the slash.
+                        -
+                    -
+                    li -
+                        p -
+                            If this “tag” starts with
+                            code -- ? --
+                            , it will end up closing with
+                            code -- ?> --
+                            .
+                        -
+                    -
+                    li -
+                        p -- Typically: --
+                        pre -
+!-- Comment -- 
+!doctype - html -- 
+?xml - version 1.0 - encoding UTF-8 - standalone no -- 
+-
+                        pre -
+<!-- Comment -->
+<!doctype html>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+-
+                    -
+                -
+            -
+        -
+        h2 -- Template --
+        p -- Another example about how Dash Markup and derivatives can be extended, further. --
+        p -- In addition to basic rules, --
+        ul -
+            li -- there can be dedicated “template” files, in which: --
+            ul -
+                li -
+                    A Dash/XML line with tag
+                    code -- @ --
+                    and double dash ending starts a template
+                    i -- section. --
+                -
+                li -
+                    The first “attribute” being section’s name, and words following it are defined
+                    i -- arguments --
+                    that can be passed & used later. Arguments can have optional default value.
+                -
+                li -
+                    The section’s Dash/XML content go below this line.
+                    An argument defined previously can be used by leading the argument’s name with a double dash (like a CSS argument.)
+                -
+                li -
+                    Leave a line with bare double dash, and use this section like an element later to have further content put here.
+                -
+                li -
+                    p -- Short example: --
+                    pre -
+@common-head - title Normal Page -- 
+head - 
+    meta - charset UTF-8 -- 
+    title -- --title -- 
+    link - rel stylesheet - href /res/normal.css -- 
+    -- 
+- 
+-
+                -
+            -
+            li -- and use template in other Dash XML files: --
+            ul -
+                li -
+                    p -- Just use the sections like an XML tag, and pass arguments optionally like attributes: --
+                    pre -
+@common-head - title Fancy Page - 
+    link - rel stylesheet - href /res/fancy.css -- 
+- 
+-
+                -
+                li -- It’s up to the implementation to deal with templates importing, storing, etc. --
+            -
+        -
+        h2 -- Realtime Demonstration --
+        h3 -- Input --
+        iframe - class plain-text - src dash-xml.dm -
+        -
+        h3 -- Output --
+        p -- The page in front of you! --
+        p -
+            Still not convinced? Try typing in a
+            a - href dash-xml-demo.html -- Live Demo! --
+        -
+        p -
+            Or go directly toward the
+            a - href https://codeberg.org/NaitLee/dash-xml -- prototype scripts! --
+            br --
+            (In TypeScript, under CC0. They can be used in any environment with ES6 & Modules available.)
+        -
+    -
+    footer -
+        @footer-cc0 --
+    -
+-

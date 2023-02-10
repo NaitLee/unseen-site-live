@@ -1,0 +1,42 @@
+@page - title Dash XML Demo -
+main -
+p - class center -- Type to see Dash XML in action --
+textarea - spellcheck false - id input -
+-
+p - class center -- Realtime output --
+noscript -
+    p - class center -- JavaScript is needed for this one --
+-
+textarea - spellcheck false - id output -
+-
+-
+footer -
+    @footer-cc0 --
+-
+script - nomodule true -
+document.querySelector('#output').value = 'Sorry, your browser doesn\'t support ES6 modules';
+-
+script - type module -
+// @license magnet:?xt=urn:btih:90dc5c0be029de84e523b9b3922520e79e0e6f08&dn=cc0.txt CC0-1.0
+
+import { DashXml } from "/js/dash-xml.mjs";
+
+const dash = new DashXml();
+
+const input = document.querySelector('#input');
+const output = document.querySelector('#output');
+
+function exercise() {
+    output.value = '';
+    const lines = input.value.split('\n');
+    lines.forEach(line => output.value += dash.translateLine(line) + '\n');
+    dash.tags.splice(0, dash.tags.length); // reset state
+}
+
+input.addEventListener('keyup', exercise);
+
+// await fetch('dash-markup.dm').then(r => r.text()).then(t => input.value = t);
+if (input.value === '') input.value = 'Dash - Markup --\n';
+exercise();
+-
+-
