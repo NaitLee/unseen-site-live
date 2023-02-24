@@ -35,7 +35,7 @@ function exercise() {
 
 input.addEventListener('keyup', exercise);
 
-// await fetch('dash-markup.dm').then(r => r.text()).then(t => input.value = t);
+// await fetch('dash-markup--').then(r => r.text()).then(t => input.value = t);
 if (input.value === '') input.value = 'Dash - Markup --\n';
 exercise();
 -

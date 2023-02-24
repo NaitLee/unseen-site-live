@@ -145,7 +145,7 @@ head -
         -
         h2 -- Realtime Demonstration --
         h3 -- Input --
-        iframe - class plain-text - src dash-xml.dm -
+        iframe - class plain-text - src dash-xml-- -
         -
         h3 -- Output --
         p -- The page in front of you! --

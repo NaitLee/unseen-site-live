@@ -8,7 +8,7 @@ import { typeByExtension } from "https://deno.land/std@0.177.0/media_types/type_
 import { DashXmlTemplate, DashXmlWithTemplate } from "https://codeberg.org/NaitLee/dash-xml/raw/tag/0.0.1/dash-xml-with-template.ts";
 
 const DashXmlPossibleSuffices = new Set(['.html', '.htm', '.xml', '.svg']);
-const DM_SUFFIX = '.dm';
+const DM_SUFFIX = '--';
 
 const wwwroot = (Deno.args.at(0) ?? '.') + '/';
 const port = parseInt(Deno.args.at(1) ?? '8080');
@@ -79,7 +79,7 @@ serve(function(request) {
     }).then(response => {
         if (response.status === Status.NotFound)
             return notFound(request);
-        if (url.pathname.endsWith('.dm'))
+        if (url.pathname.endsWith(DM_SUFFIX))
             response.headers.set('Content-Type', 'text/plain;charset=utf-8');
         return response;
     }).catch(error => new Response(error, {
