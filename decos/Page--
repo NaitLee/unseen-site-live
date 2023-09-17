@@ -1,0 +1,13 @@
+-- - lang en - title Default Page --
+!doctype html --
+html - lang --lang -
+Head -
+    link - rel icon - href /static/favicon.ico --
+    link - rel stylesheet - href /static/main.css --
+    title -- --title --
+-
+body -
+    Nav --
+    -- --
+-
+-

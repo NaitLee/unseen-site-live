@@ -1,10 +1,10 @@
-@page - title Plans -
+Page - title Plans -
     main -
         h1 -- Plans --
         ul -
             li -
                 Besides
-                a - href dash-markup.html -- Dash Markup, --
+                a - href dash-markup -- Dash Markup, --
                 introduce more neat stuffs
             -
             li -- “Treasure” section or page to introduce neat stuffs from elsewhere --

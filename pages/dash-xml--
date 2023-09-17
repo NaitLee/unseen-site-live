@@ -1,11 +1,11 @@
-@page - title Dash --- XML ---- -
+Page - title Dash --- XML ---- -
     main -
         h1 -- Dash XML --
         p - class center -- “ IT’S JUST TOO SIMPLE — LET’S TURN IT COMPLEX ” --
         p -- This is one example about how Dash Markup can be used in practice. --
         p -- Short proof of concept: --
 
-!-- pre will keep indentation, which we don't want --
+!-- pre keeps indentation, we don't want --
 pre -
 img - src res/dash-markup.svg - alt Poster:Dash --- Markup ---- -- 
 br -- 
@@ -56,7 +56,9 @@ pre -
                         p -
                             If the “tag” is
                             code -- !-- --
-                            , this line will become XML comment (
+                            , this line will become
+                            a - href https://developer.mozilla.org/en-US/docs/Web/XML/XML_Introduction#comments -- XML comment --
+                            (
                             code -- <!-- --> --
                             )
                         -
@@ -65,102 +67,53 @@ pre -
                         p -
                             If this “tag” starts with
                             code -- ! --
-                            , its closing will omit the slash.
+                            , it’s an
+                            a - href https://developer.mozilla.org/en-US/docs/Web/XML/XML_Introduction#entities -- Entity --
+                            , closing will omit the slash.
                         -
                     -
                     li -
                         p -
                             If this “tag” starts with
                             code -- ? --
-                            , it will end up closing with
+                            , it’s a
+                            a - href https://developer.mozilla.org/en-US/docs/Web/XML/XML_Introduction#xml_declaration -- Declaration --
+                            , will close with
                             code -- ?> --
                             .
                         -
                     -
                     li -
                         p -- Typically: --
-                        pre -
+pre -
 !-- Comment -- 
 !doctype - html -- 
 ?xml - version 1.0 - encoding UTF-8 - standalone no -- 
 -
-                        pre -
+pre -
 <!-- Comment -->
 <!doctype html>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 -
-                    -
-                -
-            -
-        -
-        h2 -- Template --
-        p -- Another example about how Dash Markup and derivatives can be extended, further. --
-        p -- In addition to basic rules, --
-        ul -
-            li -- there can be dedicated “template” files, in which: --
-            ul -
-                li -
-                    A Dash/XML line with tag
-                    code -- @ --
-                    and double dash ending starts a template
-                    i -- section. --
-                -
-                li -
-                    The first “attribute” being section’s name, and words following it are defined
-                    i -- arguments --
-                    that can be passed & used later. Arguments can have optional default value.
-                -
-                li -
-                    The section’s Dash/XML content go below this line.
-                    An argument defined previously can be used by leading the argument’s name with a double dash (like a CSS argument.)
-                -
-                li -
-                    Leave a line with bare double dash, and use this section like an element later to have further content put here.
-                -
-                li -
-                    p -- Short example: --
-                    pre -
-@common-head - title Normal Page -- 
-head - 
-    meta - charset UTF-8 -- 
-    title -- --title -- 
-    link - rel stylesheet - href /res/normal.css -- 
-    -- 
-- 
 -
                 -
             -
-            li -- and use template in other Dash XML files: --
-            ul -
-                li -
-                    p -- Just use the sections like an XML tag, and pass arguments optionally like attributes: --
-                    pre -
-@common-head - title Fancy Page - 
-    link - rel stylesheet - href /res/fancy.css -- 
-- 
--
+            li -
+                p -
+                    a - href https://developer.mozilla.org/en-US/docs/Web/XML/XML_Introduction#entities -- Entity definition --
+                    not supported intentionally due to complexity and
+                    a - href https://docs.python.org/3/library/xml.html#xml-vulnerabilities -- security --
+                    problems.
                 -
-                li -- It’s up to the implementation to deal with templates importing, storing, etc. --
             -
         -
         h2 -- Realtime Demonstration --
-        h3 -- Input --
-        iframe - class plain-text - src dash-xml-- -
-        -
-        h3 -- Output --
-        p -- The page in front of you! --
         p -
-            Still not convinced? Try typing in a
-            a - href dash-xml-demo.html -- Live Demo! --
-        -
-        p -
-            Or go directly toward the
-            a - href https://codeberg.org/NaitLee/dash-xml -- prototype scripts! --
-            br --
-            (In TypeScript, under CC0. They can be used in any environment with ES6 & Modules available.)
+            Try it in a
+            a - href dash-xml-demo -- Live Demo! --
         -
     -
     footer -
-        @footer-cc0 --
+        CC0 --
     -
 -

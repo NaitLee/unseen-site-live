@@ -1,0 +1,60 @@
+Page - title An Unseen Site -
+    main - class frontpage -
+        h2 -- Developer-Oriented Fun --
+        p -
+            Site is under active development
+            br --
+            and no much fun as for now…
+        -
+        p -
+            But see
+            a - href plans -- Plans! --
+        -
+        h2 -- Primary Pages --
+        div - class showcase -
+            ShowcaseItem - imgsrc https://repository-images.githubusercontent.com/683466073/4de1f7b7-c8d6-426b-ac2f-29178816a1d0 - imgalt Poster:Kitty Printer - link https://print.unseen-site.fun/ - linktarget _blank - title Kitty Printer -
+                p -- Make use of your “cat printer” with this simple Web APP! --
+            -
+            ShowcaseItem - imgsrc https://repository-images.githubusercontent.com/519487412/5a9810ca-a261-4601-8014-a4012b760961 - imgalt Poster:Xonotic Map Repository - link http://xmaps.unseen-site.fun - linktarget _blank - title Xonotic Map Repository -
+                p -
+                    Browse, search for, and download historical community maps for
+                    a - href https://xonotic.org/ -- Xonotic --
+                -
+            -
+            ShowcaseItem - imgsrc /stuffs/no-poster.svg - imgclass black-on-white - imgalt No Poster - link https://feed.unseen-site.fun/ - linktarget _blank - title Feeding -
+                p -- Feed me! --
+            -
+            ShowcaseItem - imgsrc stuffs/dash-markup.svg - imgclass black-on-white - imgalt Poster:Dash --- Markup ---- - link dash-markup - title Dash Markup -
+                p -- A conceptual Markup, but not necessarily “Markup Language” --
+            -
+        -
+        h2 -- Personal Projects --
+        div - class showcase -
+            ShowcaseItem - imgsrc https://repository-images.githubusercontent.com/403563361/93e32942-856c-4552-a8b0-b03c0976a3a7 - imgclass black-on-white - imgalt Poster:Cat Printer - link https://github.com/NaitLee/Cat-Printer - title Cat Printer -
+                p -
+                    Get
+                    i -- true --
+                    control of your “Cat Printer” in hand
+                -
+            -
+            ShowcaseItem - imgsrc stuffs/no-poster.svg - imgclass black-on-white - imgalt No Poster - link https://github.com/NaitLee/xon-cn-ext - title Ext. CN Translations for Xonotic -
+                p -- “Extended” Chinese Translation Pack for Xonotic; also includes T/S conversion infrastructure --
+            -
+        -
+        h2 -
+            u -- Archival --
+            Projects
+        -
+        div - class showcase -
+            ShowcaseItem - imgsrc https://repository-images.githubusercontent.com/270198709/444f1e80-b0e4-11eb-8988-9124607c3d59 - imgalt Poster:Takeback Template - link https://github.com/NaitLee/Takeback-HFS-Template - title Takeback Template for HFS -
+                p -- A cool yet simple HFS 2 template with rich multimedia features --
+            -
+            ShowcaseItem - imgsrc https://repository-images.githubusercontent.com/367633470/9c58d900-d6c2-11eb-8afc-b1d42e698c22 - imgalt Poster:PHFS - link https://github.com/NaitLee/PHFS - title Python HTTP File Server -
+                p -- Experimental “port” of HFS 2 in Python 3, with HFS 2 template support --
+            -
+        -
+    -
+    footer -
+        CC-BY-4.0 --
+    -
+-

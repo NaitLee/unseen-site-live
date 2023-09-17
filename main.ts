@@ -1,91 +1,61 @@
+import { contentType } from "https://deno.land/std@0.201.0/media_types/mod.ts";
+import { Status } from "https://deno.land/std@0.201.0/http/http_status.ts";
+import { DASH_FILE_SUFFIX, DEF_MIME_STATIC, DEF_MIME_STUFF, NOT_FOUND_PAGE, PATH_STATIC, PATH_STUFFS } from "./src/constants.ts";
+import { requestPage } from "./src/dash-pages.ts";
+import { dashXmlScanLine, dashXmlTranslateLine } from "./src/dash-xml-core.js";
 
-import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
-import { serveDir } from "https://deno.land/std@0.177.0/http/file_server.ts";
-import { Status, STATUS_TEXT } from "https://deno.land/std@0.177.0/http/http_status.ts";
-import { TextLineStream } from "https://deno.land/std@0.177.0/streams/mod.ts";
-import { typeByExtension } from "https://deno.land/std@0.177.0/media_types/type_by_extension.ts";
-
-import { DashXmlTemplate, DashXmlWithTemplate } from "https://codeberg.org/NaitLee/dash-xml/raw/tag/0.0.1/dash-xml-with-template.ts";
-
-const DashXmlPossibleSuffices = new Set(['.html', '.htm', '.xml', '.svg']);
-const DM_SUFFIX = '--';
-
-const wwwroot = (Deno.args.at(0) ?? '.') + '/';
-const port = parseInt(Deno.args.at(1) ?? '8080');
-
-const template = new DashXmlTemplate();
-const decoder = new TextDecoder();
-
-for await (const entry of Deno.readDir('templates')) {
-    if (!entry.isFile || !entry.name.endsWith(DM_SUFFIX)) continue;
-    console.log('Adding templates from', entry.name);
-    await Deno.readFile('templates/' + entry.name)
-        .then(content => template.addTemplate(decoder.decode(content)))
-        .catch(_ => void 0);
-}
-
-async function streamDashXml(path: string) {
-    const file = await Deno.open(wwwroot + path);
-    const dash = new DashXmlWithTemplate(template);
-    const dash_stream = new TransformStream<string, string>({
-        transform(line, controller) {
-            for (const output of dash.yieldLine(line))
-                controller.enqueue(output + '\n');
+async function pageResponse(name: string) {
+    const page = await requestPage(name);
+    return new Response(page.content, {
+        status: page.status,
+        headers: {
+            'Content-Type': page.mimetype
         }
     });
-    return file.readable
-        .pipeThrough(new TextDecoderStream())
-        .pipeThrough(new TextLineStream())
-        .pipeThrough(dash_stream)
-        .pipeThrough(new TextEncoderStream());
 }
 
-function getSuffix(path: string) {
-    const last_dot_index = path.lastIndexOf('.')
-    return last_dot_index === -1 ? '' : path.slice(last_dot_index);
-}
-
-function serveDashOrHtml(request: Request, urlpath?: string): Promise<Response> {
-    const path = wwwroot + (urlpath ?? new URL(request.url).pathname);
-    const suffix = getSuffix(path);
-    const dmpath = (suffix === '' ? path : path.slice(0, -suffix.length)) + DM_SUFFIX;
-    return streamDashXml(dmpath)
-        .then(stream => new Response(stream, {
-            headers: {
-                'Content-Type': typeByExtension(suffix) ?? 'text/xml'
-            }
-        }))
-        .catch(_ => notFound(request, path));
-}
-
-function notFound(request: Request, _missing_path?: string): Promise<Response> {
-    return serveDashOrHtml(request, '/not-found.html')
-        .catch(_error => new Response(STATUS_TEXT[Status.NotFound], {
-            status: Status.NotFound,
-            statusText: STATUS_TEXT[Status.NotFound]
-        }));
-}
-
-serve(function(request) {
+Deno.serve({}, async function(request: Request) {
     const url = new URL(request.url);
-    if (url.pathname === '/')
-        url.pathname = '/index.html';
-    const suffix = getSuffix(url.pathname);
-    if (DashXmlPossibleSuffices.has(suffix))
-        return serveDashOrHtml(request, url.pathname)
-            .catch(_error => notFound(request));
-    return serveDir(request, {
-        fsRoot: wwwroot
-    }).then(response => {
-        if (response.status === Status.NotFound)
-            return notFound(request);
-        if (url.pathname.endsWith(DM_SUFFIX))
-            response.headers.set('Content-Type', 'text/plain;charset=utf-8');
-        return response;
-    }).catch(error => new Response(error, {
-        status: Status.InternalServerError,
-        statusText: STATUS_TEXT[Status.InternalServerError]
-    }));
-}, {
-    port: port
+    const path = url.pathname.slice(1);
+    const ext = path.split('.').at(-1)!;
+    if (path.startsWith(PATH_STATIC)) {
+        const response = await fetch(new URL(path, import.meta.url)).then(r => r.ok ? r : null).catch(() => null);
+        if (response === null)
+            return pageResponse(NOT_FOUND_PAGE);
+        const new_response = new Response(response.body, {
+            headers: { 'Content-Type': contentType(ext) || DEF_MIME_STATIC }
+        })
+        return new_response;
+    }
+    if (path.startsWith(PATH_STUFFS)) {
+        const response = await fetch(new URL(path + DASH_FILE_SUFFIX, import.meta.url)).then(r => r.ok ? r : null).catch(() => null);
+        if (response === null)
+            return pageResponse(NOT_FOUND_PAGE);
+        let content = '';
+        const stack: string[] = [];
+        for (const line of (await response.text()).split('\n')) {
+            const flags = dashXmlScanLine(line);
+            content += dashXmlTranslateLine(line, flags, stack);
+        }
+        return new Response(content, {
+            headers: { 'Content-Type': contentType(ext) || DEF_MIME_STUFF }
+        });
+    }
+    // path bandaids
+    if (url.pathname.startsWith('/pages/'))
+        return new Response(null, {
+            status: Status.MovedPermanently,
+            headers: { 'Location': url.pathname.slice('/pages'.length) }
+        });
+    if (url.pathname.endsWith('.html'))
+        return new Response(null, {
+            status: Status.MovedPermanently,
+            headers: { 'Location': url.pathname.slice(0, -'.html'.length) }
+        });
+    if (path === 'favicon.ico')
+        return new Response(null, {
+            status: Status.Found,
+            headers: { 'Location': '/static/favicon.ico' }
+        });
+    return pageResponse(path || 'index');
 });

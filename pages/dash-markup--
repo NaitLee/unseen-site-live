@@ -1,4 +1,4 @@
-@page - title Dash --- Markup ---- -
+Page - title Dash --- Markup ---- -
     main -
         h1 -- Dash Markup --
         h2 -- Introduction --
@@ -23,7 +23,7 @@
                     Dash Markup is designed for
                     i -- typing & parsing with ease. --
                 -
-                p -- For example, it can translate to (partial) XML: --
+                p -- For example, it can translate to XML: --
                 pre -- <Dash Markup /> --
                 p -- That said, you may use & extend it for anything suitable in your mind. --
             -
@@ -53,6 +53,7 @@
                 p -- Note that, --
                 ul -
                     li -- only dashes, spaces, and newlines are meaningful for Dash Markup syntax; --
+                    li -- mixing up dash markup and plain text or whatever format is completely ok; --
                     li -- spaces around the dashes are strict; --
                     li -- indentations are treated as plain text; --
                     li -- in case regular dashes are wanted where dashes parsed as part of syntax, use more than 2 dashes; --
@@ -64,10 +65,10 @@
         h2 -- Example Use Case(s) --
         p -
             See an excellent use case:
-            a - href dash-xml.html -- Dash XML. --
+            a - href dash-xml -- Dash XML. --
         -
     -
     footer -
-        @footer-cc0 --
+        CC0 --
     -
 -

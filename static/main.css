@@ -11,6 +11,7 @@
 body {
     font-family: 'Noto Sans', 'Segoe UI', sans-serif;
     margin: 0;
+    line-height: 1.5;
     color: var(--fore);
     background-color: var(--bottom);
     font-size: large;
@@ -22,7 +23,6 @@ body {
 
 h1, h2, h3 {
     margin: 16px 0;
-    /* padding: 0 8px; */
 }
 main h1 {
     text-align: center;
@@ -41,7 +41,7 @@ a:hover, a:active {
 
 nav {
     margin: 1em 0;
-    padding: 8px;
+    padding: 0;
     box-shadow: var(--fore) 0 0 1px;
     background-color: var(--back);
     display: flex;
@@ -50,39 +50,43 @@ nav {
     top: 0;
     z-index: 2;
 }
-nav > :nth-child(2) > a {
-    text-decoration: none;
-    padding: 0 0.5em;
-}
 
 nav > * {
     display: inline-block;
     height: var(--nav-height);
     line-height: var(--nav-height);
     vertical-align: middle;
+    box-sizing: content-box;
 }
-nav > :nth-child(1) {
+.nav__logo {
     flex-grow: 0;
-}
-nav > :nth-child(2) {
-    flex-grow: 1;
-    text-align: end;
-}
-nav h1 {
     margin: 0;
-    padding: 0;
-}
-nav svg {
+    padding: 8px 1rem;
     width: auto;
     max-width: 100%;
     height: var(--nav-height);
 }
+.nav__links {
+    flex-grow: 1;
+    text-align: end;
+    height: auto;
+}
+.nav__links a {
+    display: inline-block;
+    text-decoration: none;
+    padding: 8px 1em;
+    border-bottom: 2px solid transparent;
+    transition: border 0.3s ease;
+}
+.nav__links a:hover {
+    border-bottom: 2px solid var(--fore);
+}
 
 main {
-    width: 54em;
+    width: 29.7cm;
     max-width: 100%;
     margin: 0 auto 20vh auto;
-    padding: 8px;
+    padding: 1em;
 }
 .frontpage {
     text-align: center;
@@ -100,18 +104,14 @@ footer {
     padding: 1em;
     margin: 10vh 0;
     font-size: small;
-}
-footer p {
     text-align: center;
 }
 
-.showcase > div,
+.showcase__item,
 textarea, pre,
 iframe {
     border-radius: 4px;
     border: 1px solid var(--shade);
-    /* border: none; */
-    /* box-shadow: var(--fore) 0 0 1px; */
 }
 
 button, input, textarea {
@@ -127,8 +127,9 @@ pre {
     padding: 8px;
     max-width: 100%;
     overflow: auto;
+    white-space: pre;
 }
-p, li, pre {
+p , li, pre {
     margin: var(--line-span) 0;
 }
 
@@ -139,57 +140,44 @@ p, li, pre {
     justify-content: space-around;
 }
 
-.showcase > div {
+.showcase p {
+    margin: 0;
+}
+
+.showcase__item {
     width: var(--item-width);
-    height: calc(6em + var(--item-width) * 0.5) /* 0.467 */;
+    height: calc(6.5em + var(--item-width) * 0.5) /* 0.467 */;
     margin: 1em;
     display: grid;
     grid-template:
         'a a a' calc(var(--item-width) * 0.5) /* 0.467 */
-        'b b b' 1.6em
+        'b b b' 2em
         'c c c' auto / 20% 60% 20%;
     overflow: hidden;
 }
-.showcase > div > img  {
+.showcase__item > img,
+.showcase__image  {
     grid-area: a;
     width: 100%;
     /* transform: scale(1.14); */
     transform-origin: center;
 }
-.showcase > div > a,
-.showcase > div > span {
+.showcase__title,
+.showcase__description {
+    display: block;
     background-color: var(--bottom);
     text-align: center;
     padding: 4px 8px;
     z-index: 1;
-    margin: auto 0;
+    margin: 0;
+    line-height: 1.8;
 }
-.showcase > div > a    { grid-area: b; font-weight: 600; }
-.showcase > div > span { grid-area: c; }
+.showcase__title { grid-area: b; font-weight: 600; }
+.showcase__description { grid-area: c; }
 
 iframe, textarea {
     width: 100%;
     height: 33vh;
-}
-
-html[lang="lzh"] body {
-    font-family: 'Noto Serif CJK TC', 'HanaMinA', 'Noto Serif', serif;
-    font-size: x-large;
-    letter-spacing: 0.12em;
-}
-html[lang="lzh"] nav {
-    margin: 0;
-}
-html[lang="lzh"] main {
-    writing-mode: vertical-rl;
-    margin-bottom: 0;
-    max-height: calc(100vh - var(--nav-height) - 16px);
-    line-height: 2em;
-    overflow: auto;
-    width: 100%;
-}
-html[lang="lzh"] pre {
-    font-family: 'Noto Serif CJK TC', 'HanaMinA', 'Noto Serif', 'FreeMono', 'Courier New', monospace;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -204,7 +192,7 @@ html[lang="lzh"] pre {
         filter: invert(0.92);
     }
     img {
-        filter: brightness(0.85);
+        filter: brightness(0.8);
     }
 }
 
