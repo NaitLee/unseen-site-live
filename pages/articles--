@@ -1,0 +1,12 @@
+Page - title Articles - lang en -
+    main -
+        h1 -- Articles --
+        p - class centerprint -- My experiments and hax. --
+        h2 -- Recommended --
+        div - class showcase -
+            ShowcaseItem - imgsrc stuffs/dash-markup.svg - imgclass black-on-white - imgalt Poster:Dash --- Markup ---- - link dash-markup - title Dash Markup -
+                A conceptual Markup, but not necessarily “Markup Language”
+            -
+        -
+    -
+-

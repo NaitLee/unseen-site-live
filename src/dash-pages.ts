@@ -1,6 +1,7 @@
 import { DASH_FILE_SUFFIX, NOT_FOUND_PAGE, PATH_DECOS, PATH_PAGES } from "./constants.ts";
 import { Flag, dashXmlParseTree, dashXmlTreeToString } from "./dash-xml-core.js";
 import { Page } from "./types.ts";
+import CC from "./cc.ts";
 
 async function fetchDashRoot(path: string) {
     const content = await fetch(new URL('../' + path, import.meta.url)).then(r => r.text()).catch(() => '');
@@ -18,12 +19,30 @@ function metadataFromRoot(root: DashXmlNode, defaults?: Record<string, any>) {
     return Object.assign({}, defaults || {}, (first_child && (first_child.flags & Flag.Frag)) ? first_child.attributes : {});
 }
 
-export async function requestPage(name: string): Promise<Page> {
-    const root = await fetchDashRoot(PATH_PAGES + name + DASH_FILE_SUFFIX);
+interface PageOptions {
+    accepts_languages: string[];
+}
+
+export async function requestPage(name: string, options: PageOptions): Promise<Page> {
+    let root: DashXmlNode | null = null;
+    let lang = '';
+    let cc: ((s: string) => string) | null = null;
+    for (lang of options.accepts_languages) {
+        if (['zh-CN', 'zh-HK', 'zh-TW'].indexOf(lang) !== -1) {
+            cc = CC[lang as 'zh-CN' | 'zh-HK' | 'zh-TW'];
+            lang = 'zh-Hant-CN';
+        }
+        root = await fetchDashRoot(PATH_PAGES + lang + '/' + name + DASH_FILE_SUFFIX);
+        if (root !== null) break;
+    }
+    if (lang !== 'zh-Hant-CN')
+        cc = null;
     if (root === null) {
-        if (name !== NOT_FOUND_PAGE)
-            return requestPage(NOT_FOUND_PAGE);
-        else
+        if (name !== NOT_FOUND_PAGE) {
+            const page = await requestPage(NOT_FOUND_PAGE, options);
+            page.status = 404;
+            return page;
+        } else
             return {
                 status: 404,
                 content: 'Not Found',
@@ -80,12 +99,13 @@ export async function requestPage(name: string): Promise<Page> {
         escape: true
     });
     const newroot = await traverse(root);
+    const content = dashXmlTreeToString(newroot, {
+        compact: metadata.compact,
+        escape: metadata.escape
+    });
     return {
         status: metadata.status,
-        content: dashXmlTreeToString(newroot, {
-            compact: metadata.compact,
-            escape: metadata.escape
-        }),
+        content: cc === null ? content : cc(content),
         mimetype: metadata.mimetype + ';charset=' + metadata.charset
     };
 }

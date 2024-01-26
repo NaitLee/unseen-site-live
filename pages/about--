@@ -1,13 +1,16 @@
 Page - title About -
     main -
-        p -- Under construction. --
+        h1 -- About --
+        !-- p - class centerprint - Before I write introduction or add links, please enjoy this: --
+        h2 -- Introduction --
+        p -- NaitLee is a cool cutie. --
+        p -- Oh, he’s just here, say hi: --
+        iframe - class naitframe svgimg - alt Nait’s Avatar - src static/nait-draft.svg -
+        -
         p -
-            You may explore
-            i -- projects --
-            on the
-            a - href ../ -- frontpage --
-            to know
-            b -- a lot about. --
+            Thought that he’s adorable?
+            a - href https://feed.unseen-site.fun/ -- Feed him snacks --
+            !
         -
     -
 -

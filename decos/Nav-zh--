@@ -1,0 +1,8 @@
+nav -
+    h1 - class nav__logo -
+        Logo --
+    -
+    span - class nav__links -
+        a - href about -- 關於 --
+    -
+-

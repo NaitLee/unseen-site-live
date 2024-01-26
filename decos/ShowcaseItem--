@@ -1,9 +1,7 @@
-div - class showcase__item -
+a - class showcase__item - href --link - target --linktarget -
     img - class --imgclass - width 600 - src --imgsrc - alt --imgalt --
-    p - class showcase__title -
-        a - href --link - target --linktarget -- --title --
-    -
-    div - class showcase__description -
+    span -- --title --
+    div -
         -- --
     -
 -

@@ -2,8 +2,7 @@
 !doctype html --
 html - lang --lang -
 Head -
-    link - rel icon - href /static/favicon.ico --
-    link - rel stylesheet - href /static/main.css --
+    meta - name description - content An unseen site --
     title -- --title --
 -
 body -

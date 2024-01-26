@@ -1,0 +1,23 @@
+Page - title 天邊小站 - lang zh-Hant-CN -
+    main - class frontpage -
+        h2 -- 面向開發者的樂趣 --
+        p --   你好啊 👋 --
+        p -
+             小站正在抓緊建設，
+            br --
+             以後會有更多樂趣！
+        -
+        !-- 在這裏尋找一些有意思的東西！ --
+        section -
+            BigLink - imgsrc static/web-apps-label.svg - title Web 應用 - link web-apps --
+            BigLink - title 軟件項目 - link software --
+            BigLink - title 文章 - link articles --
+            BigLink - title 投喂零食！ - link https://feed.unseen-site.fun/ --
+        -
+    -
+    footer -
+        除非另有聲明，此網站上的頁面與資源皆以
+        a - href https://creativecommons.org/licenses/by/4.0/ -- CC BY 4.0 --
+        發佈。
+    -
+-
