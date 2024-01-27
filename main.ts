@@ -9,7 +9,7 @@ async function pageResponse(req: Request, name: string) {
     const languages = new URL(req.url).searchParams.getAll('lang').concat(acceptsLanguages(req));
     if (languages.at(-1) === '*')
         languages.pop();
-    languages.push('', 'en', 'zh-Hant-CN');
+    languages.push('', 'en-US', 'en', 'zh-Hant-CN');
     const page = await requestPage(name, {
         accepts_languages: languages
     });
